@@ -4,3 +4,5 @@ Use this example Terraform project to see how [`infracost`](https://www.infracos
 To try it:
   1. `git clone https://github.com/infracost/example-terraform.git`
   2. `infracost --tfdir example-terraform`
+
+You can also play with the `main.tf` file in the example.
