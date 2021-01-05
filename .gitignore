@@ -1,2 +1,3 @@
 # Terraform artifacts
 **/.terraform/**
+.terraform.lock.hcl
