@@ -1,3 +1,7 @@
 # Terraform artifacts
 **/.terraform/**
 .terraform.lock.hcl
+plan.json
+plan.save
+bigplan.json
+bigplan.save
