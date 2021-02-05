@@ -31,8 +31,10 @@ resource "google_compute_instance" "instance1" {
   }
 }
 
-resource "google_compute_disk" "ssd_disk" {
-  name = "ssd_disk"
-  type = "pd-ssd" # <<<<< Try changing this to pd-standard to compare the costs
-  size = 200
+resource "google_dns_record_set" "frontend" {
+  name = "frontend.123"
+  type = "A"
+  ttl  = 300
+  rrdatas = ["123.123.123.123]"]
+  managed_zone = "zone"
 }
