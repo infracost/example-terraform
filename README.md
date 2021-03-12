@@ -1,13 +1,17 @@
 # Example Terraform Project
 
 Use this example Terraform project to see how [`infracost`](https://www.infracost.io) works.
-To try it:
+- sample1 contains a basic AWS Terraform project with an EC2 instance and a Lambda function
+- sample2 contains a basic Google Terraform project with a Compute Instance and a DNS record set
+
+To try Infracost with the samples:
 ```
 git clone https://github.com/infracost/example-terraform.git
 cd example-terraform
-# You can play with `aws/main.tf` and `aws/infracost-usage.yml`, and re-run infracost to compare costs
-infracost --terraform-dir aws --usage-file aws/infracost-usage.yml
 
-# GCP example:
-infracost --terraform-dir google --usage-file google/infracost-usage.yml
+# Play with sample1/main.tf and sample1/infracost-usage.yml, and re-run to compare costs
+infracost breakdown --path sample1 --usage-file sample1/infracost-usage.yml
+
+# Show diff of monthly costs
+infracost diff --path sample1
 ```
