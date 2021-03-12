@@ -9,9 +9,9 @@ To try Infracost with the samples:
 git clone https://github.com/infracost/example-terraform.git
 cd example-terraform
 
-# Play with sample1/main.tf and sample1/infracost-usage.yml, and re-run to compare costs
-infracost breakdown --path sample1 --usage-file sample1/infracost-usage.yml
+# Play with sample1/main.tf and re-run to compare costs
+infracost breakdown --path sample1
 
-# Show diff of monthly costs
-infracost diff --path sample1
+# Show diff of monthly costs, edit the yaml file and re-run to compare costs
+infracost diff --path sample1 --usage-file sample1/infracost-usage.yml
 ```
