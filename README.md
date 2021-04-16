@@ -7,11 +7,11 @@ Use this example Terraform project to see how [`infracost`](https://www.infracos
 To try Infracost with the samples:
 ```
 git clone https://github.com/infracost/example-terraform.git
-cd example-terraform
+cd example-terraform/sample1
 
-# Play with sample1/main.tf and re-run to compare costs
-infracost breakdown --path sample1
+# Play with main.tf and re-run to compare costs
+infracost breakdown --path .
 
 # Show diff of monthly costs, edit the yaml file and re-run to compare costs
-infracost diff --path sample1 --usage-file sample1/infracost-usage.yml
+infracost diff --path . --sync-usage-file --usage-file infracost-usage.yml
 ```
