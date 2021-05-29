@@ -1,0 +1,14 @@
+# You can use this file to define resource usage estimates for Infracost to use when calculating
+# the cost of usage-based resource, such as Azure Functions.
+# `infracost breakdown --usage-file infracost-usage.yml [other flags]`
+# See https://infracost.io/usage-file/ for docs
+version: 0.1
+resource_usage:
+  azurerm_function_app.my_function:
+    monthly_executions: 100000 # Monthly executions to the function. Only applicable for Consumption plan.
+    execution_duration_ms: 500 # Average duration of each execution in milliseconds. Only applicable for Consumption plan.
+    memory_mb: 128 # Average amount of memory consumed by function in MB. Only applicable for Consumption plan.
+    instances: 2 # Number of instances. Only applicable for Premium plan.
+  azurerm_linux_virtual_machine.my_vm:
+    os_disk:
+      monthly_disk_operations: 2000000 # Number of disk operations (writes, reads, deletes) using a unit size of 256KiB.
