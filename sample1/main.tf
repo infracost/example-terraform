@@ -1,13 +1,3 @@
-// AWS provider is locked due to https://github.com/hashicorp/terraform-provider-aws/issues/20287
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "3.50.0"
-    }
-  }
-}
-
 provider "aws" {
   region                      = "us-east-1" # <<<<< Try changing this to eu-west-1 to compare the costs
   skip_credentials_validation = true
@@ -27,7 +17,7 @@ resource "aws_instance" "web_app" {
   ebs_block_device {
     device_name = "my_data"
     volume_type = "io1"                     # <<<<< Try changing this to gp2 to compare costs
-    volume_size = 1000
+    volume_size = 500
     iops        = 800
   }
 }
