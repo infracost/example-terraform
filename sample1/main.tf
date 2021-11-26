@@ -1,3 +1,4 @@
+# this comment
 provider "aws" {
   region                      = "us-east-1" # <<<<< Try changing this to eu-west-1 to compare the costs
   skip_credentials_validation = true
