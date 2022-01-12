@@ -1,0 +1,35 @@
+pr:
+  - master
+
+variables:
+  TF_ROOT: sample1
+
+jobs:
+  - job: terraform_plan_json
+    displayName: Terraform plan JSON
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+      - task: TerraformInstaller@0
+        displayName: Install Terraform
+
+      - bash: terraform init
+        displayName: Terraform init
+        workingDirectory: $(TF_ROOT)
+
+      - bash: terraform plan -out tfplan.binary
+        displayName: Terraform plan
+        workingDirectory: $(TF_ROOT)
+
+      - bash: terraform show -json tfplan.binary > plan.json
+        displayName: Terraform show
+        workingDirectory: $(TF_ROOT)
+
+      - task: InfracostSetup@0
+        displayName: Setup Infracost
+        inputs:
+          apiKey: $(apiKey)
+
+      - bash: infracost breakdown --path=$(TF_ROOT)/plan.json --format=json --out-file=/tmp/infracost.json
+        displayName: Run Infracost
