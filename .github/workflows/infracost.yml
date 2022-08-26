@@ -14,7 +14,7 @@ jobs:
       pull-requests: write
 
     env:
-      TF_ROOT: examples/terraform-project
+      TF_ROOT: example-terraform
       # This instructs the CLI to send cost estimates to Infracost Cloud. Our SaaS product
       #   complements the open source CLI by giving teams advanced visibility and controls.
       #   The cost estimates are transmitted in JSON format and do not contain any cloud
