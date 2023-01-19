@@ -29,3 +29,10 @@ resource "aws_lambda_function" "hello_world" {
   runtime       = "nodejs12.x"
   memory_size   = 1024                      # <<<<< Try changing this to 512 to compare costs
 }
+
+resource "google_apigee_instance" "apigee_instance" {
+  name     = "tf-test"
+  location = "us-central1"
+  org_id   = "123"
+}
+
