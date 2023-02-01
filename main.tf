@@ -6,13 +6,9 @@ provider "aws" {
   secret_key                  = "mock_secret_key"
 }
 
-variable "instancetype" {
-  type = string
-}
-
 resource "aws_instance" "web_app" {
   ami           = "ami-674cbc1e"
-  instance_type = var.instancetype              # <<<<< Try changing this to m5.8xlarge to compare the costs
+  instance_type = "m5.8xlarge"             # <<<<< Try changing this to m5.8xlarge to compare the costs
 
   root_block_device {
     volume_size = 10
@@ -28,6 +24,7 @@ resource "aws_instance" "web_app" {
 
 resource "aws_lambda_function" "hello_world" {
   function_name = "hello_world"
+  filename      = "test"
   role          = "arn:aws:lambda:us-east-1:account-id:resource-id"
   handler       = "exports.test"
   runtime       = "nodejs12.x"
