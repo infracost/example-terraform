@@ -10,7 +10,7 @@ resource "azurerm_linux_virtual_machine" "my_vm" {
 
   size           = "Basic_A2" # <<<<< Try changing this to Basic_A4 to compare the costs
   admin_username = "fakenewuser"
-  admin_password = "fakepass"
+  admin_password = "fakenewpass"
 
   network_interface_ids = [
     "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testrg/providers/Microsoft.Network/networkInterfaces/fakenic",
