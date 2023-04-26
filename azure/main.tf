@@ -9,7 +9,7 @@ resource "azurerm_linux_virtual_machine" "my_vm" {
   location            = "eastus"
 
   size           = "Basic_A2" # <<<<< Try changing this to Basic_A4 to compare the costs
-  admin_username = "fakeuser"
+  admin_username = "fakenewuser"
   admin_password = "fakepass"
 
   network_interface_ids = [
@@ -37,8 +37,8 @@ resource "azurerm_app_service_plan" "elastic" {
   reserved            = false
 
   sku {
-    tier     = "Basic" 
-    size     = "EP2" 
+    tier     = "Basic"
+    size     = "EP2"
     capacity = 1
   }
 }
