@@ -3,7 +3,7 @@ provider "aws" {
   skip_credentials_validation = true
   skip_requesting_account_id  = true
   access_key                  = "new_mock_access_key"
-  secret_key                  = "mock_secret_key"
+  secret_key                  = "new_mock_secret_key"
 }
 
 resource "aws_instance" "web_app" {
