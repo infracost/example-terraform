@@ -1,0 +1,10 @@
+version: 0.1
+projects:
+  - path: .
+    name: aws
+
+  - path: google
+    name: google
+
+  - path: azure
+    name: azure
