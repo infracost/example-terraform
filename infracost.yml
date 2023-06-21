@@ -1,3 +1,4 @@
+# See https://infracost.io/config-file on how to generate this file dynamically from your repo structure
 version: 0.1
 projects:
   - path: .
