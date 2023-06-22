@@ -5,7 +5,7 @@ metadata:
    SourceEnergy: renewable
 Spec:
  physicalResources:
-  memory: 1024
+  memory: 512
  networkLinks: 
   downloadLink: 
   uploadLink: 
