@@ -1,0 +1,11 @@
+metadata:
+ id: gateway
+ tags: 
+   greenEnergy: veryHigh
+   SourceEnergy: renewable
+Spec:
+ physicalResources:
+  memory: 1024
+ networkLinks: 
+  downloadLink: 
+  uploadLink: 
