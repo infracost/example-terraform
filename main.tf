@@ -11,7 +11,8 @@ resource "aws_instance" "web_app" {
   instance_type = "m5.4xlarge"              # <<<<< Try changing this to m5.8xlarge to compare the costs
 
   tags = {
-    Environment = "prod"
+    Environment = "production"
+    Service = "web-app"
   }
 
   root_block_device {
@@ -32,4 +33,8 @@ resource "aws_lambda_function" "hello_world" {
   handler       = "exports.test"
   runtime       = "nodejs12.x"
   memory_size   = 1024                      # <<<<< Try changing this to 512 to compare costs
+  tags = {
+    Service = "api"
+    Environment = "Prod"
+  }
 }
