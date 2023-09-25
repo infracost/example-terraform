@@ -16,6 +16,11 @@ resource "azurerm_linux_virtual_machine" "my_vm" {
     "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testrg/providers/Microsoft.Network/networkInterfaces/fakenic",
   ]
 
+  tags = {
+    Environment = "production"
+    Service = "web-app"
+  }
+
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -50,4 +55,10 @@ resource "azurerm_function_app" "my_function" {
   app_service_plan_id        = azurerm_app_service_plan.elastic.id
   storage_account_name       = "fakestorageaccountname"
   storage_account_access_key = "fake_storage_account_access_key"
+
+  tags = {
+    Environment = "Prod"
+    Service = "api"
+  }
 }
+
