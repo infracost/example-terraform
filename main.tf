@@ -8,7 +8,7 @@ provider "aws" {
 
 resource "aws_instance" "web_app" {
   ami           = "ami-674cbc1e"
-  instance_type = "m5.4xlarge"              # <<<<< Try changing this to m5.8xlarge to compare the costs
+  instance_type = "m3.xlarge"
 
   tags = {
     Environment = "production"
@@ -21,11 +21,10 @@ resource "aws_instance" "web_app" {
 
   ebs_block_device {
     device_name = "my_data"
-    volume_type = "io1"                     # <<<<< Try changing this to gp2 to compare costs
-    volume_size = 500
-    iops        = 800
   }
 }
+
+
 
 resource "aws_lambda_function" "hello_world" {
   function_name = "hello_world"
