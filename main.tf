@@ -8,7 +8,7 @@ provider "aws" {
 
 resource "aws_instance" "web_app" {
   ami           = "ami-674cbc1e"
-  instance_type = "m5.8xlarge"
+  instance_type = "m5.16xlarge"
 
   tags = {
     Environment = "production"
