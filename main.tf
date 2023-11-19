@@ -8,7 +8,7 @@ provider "aws" {
 
 resource "aws_instance" "web_app" {
   ami           = "ami-674cbc1e"
-  instance_type = "m5.16xlarge"
+  instance_type = "m3.xlarge"
 
   tags = {
     Environment = "production"
@@ -17,10 +17,6 @@ resource "aws_instance" "web_app" {
 
   root_block_device {
     volume_size = 50
-  }
-
-  ebs_block_device {
-    device_name = "my_data"
   }
 }
 
