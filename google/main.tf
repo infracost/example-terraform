@@ -3,12 +3,13 @@ provider "google" {
 }
 
 resource "google_compute_instance" "my_instance" {
- machine_type = "n1-standard-16" # <<<<< Try changing this to n1-standard-32 to compare the costs
- zone         = "us-central1-a"
+  zone         = "us-central1-a"
 
- scheduling {
-   preemptible = true
- }
+  machine_type = "n1-standard-16" # <<<<< Try changing this to n1-standard-32 to compare the costs
+
+  scheduling {
+    preemptible = true
+  }
 
   guest_accelerator {
     type = "nvidia-tesla-t4" # <<<<< Try changing this to nvidia-tesla-p4 to compare the costs
