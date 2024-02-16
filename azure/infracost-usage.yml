@@ -5,7 +5,7 @@
 version: 0.1
 # The following usage values apply to each resource of the given type, which is useful when you want to define defaults.
 resource_type_default_usage:
-  azurerm_function_app:
+  azurerm_linux_function_app:
     monthly_executions: 20000000 # Monthly executions to the function. Only applicable for Consumption plan.
     execution_duration_ms: 350 # Average duration of each execution in milliseconds. Only applicable for Consumption plan.
     memory_mb: 1024 # Average amount of memory consumed by function in MB. Only applicable for Consumption plan.
