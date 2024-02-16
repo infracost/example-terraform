@@ -29,8 +29,8 @@ resource "google_compute_instance" "my_instance" {
   }
 
   labels = {
-    Environment = "production"
-    Service     = "web-app"
+    environment = "production"
+    service     = "web-app"
   }
 }
 
