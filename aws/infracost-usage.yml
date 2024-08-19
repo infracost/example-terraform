@@ -8,3 +8,8 @@ resource_type_default_usage:
   aws_lambda_function:
     monthly_requests: 20000000 # Monthly requests to the Lambda function.
     request_duration_ms: 350 # Average duration of each request in milliseconds.
+  aws_instance.my_web_app:
+    operating_system: linux # Override the operating system of the instance, can be: linux, windows, suse, rhel.
+    reserved_instance_type: standard # Offering class for Reserved Instances. Can be: convertible, standard.
+    reserved_instance_term: 1_year # Term for Reserved Instances. Can be: 1_year, 3_year.
+    reserved_instance_payment_option: all_upfront 
