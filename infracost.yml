@@ -1,0 +1,8 @@
+version: 0.1
+projects:
+  - path: aws
+    name: aws
+    usage_file: aws/infracost-usage.yml
+    terraform_vars:
+      instance_count: 5
+      artifact_version: foobar
