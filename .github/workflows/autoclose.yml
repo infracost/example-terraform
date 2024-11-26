@@ -1,0 +1,14 @@
+name: Auto Close PR
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  auto_close_pr:
+    runs-on: ubuntu-latest
+    if: github.repository == 'infracost/example-terraform'
+    steps:
+    - uses: imba-tjd/auto-close-pr-action@master
+      with:
+        pattern: 'WILL_NOT_MATCH'
+        message: 'Instead of raising a PR against this repository, please fork the repo and raise a PR against your fork. Thank you.'
