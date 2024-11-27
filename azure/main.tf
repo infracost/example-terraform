@@ -17,11 +17,6 @@ resource "azurerm_linux_virtual_machine" "my_linux_vm" {
     Service     = "web-app"
   }
 
-  tags = {
-    Environment = "production"
-    Service = "web-app"
-  }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
