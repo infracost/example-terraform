@@ -7,3 +7,4 @@ bigplan.json
 bigplan.save
 /demo
 .infracost
+.DS_Store
