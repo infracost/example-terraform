@@ -68,3 +68,21 @@ resource "aws_db_instance" "my_db" {
   skip_final_snapshot = true
   deletion_protection = false
 }
+
+module "eks" {
+  source          = "terraform-aws-modules/eks/aws"
+  cluster_name    = "my-eks-extended"
+  cluster_version = "1.24"
+  subnet_ids      = ["subnet-abc123", "subnet-def456"]
+  vpc_id          = "vpc-123456"
+
+  node_groups = {
+    default = {
+      desired_capacity = 100
+      max_capacity     = 300
+      min_capacity     = 50
+
+      instance_types = ["c5.2xlarge"]
+    }
+  }
+}
