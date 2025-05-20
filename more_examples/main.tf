@@ -53,3 +53,18 @@ resource "aws_s3_bucket" "screenshots_qa" {
 resource "aws_s3_bucket" "screenshots_prod" {
   bucket = "my_screenshots_bucket_prod"
 }
+
+resource "aws_db_instance" "my_db" {
+  identifier         = "mysql57-extended"
+  engine             = "mysql"
+  engine_version     = "5.7.44"
+  instance_class     = "db.t3.medium"
+  allocated_storage  = 20
+  storage_type       = "gp2"
+  username           = "admin"
+  password           = "yourpassword"
+  db_name            = "exampledb"
+  publicly_accessible = false
+  skip_final_snapshot = true
+  deletion_protection = false
+}
