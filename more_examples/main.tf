@@ -58,6 +58,30 @@ module "eks" {
   }
 }
 
+resource "aws_ecs_task_definition" "my_task" {
+  family                   = "my-task"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"  # 1 vCPU
+  memory                   = "2048" # 2 GB
+  execution_role_arn       = "aws_iam_role.ecs_task_execution_role.arn"
+
+  container_definitions = jsonencode([
+    {
+      name      = "task-container"
+      image     = "public.ecr.aws/nginx:latest"
+      essential = true
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
+}
+
 provider "azurerm" {
   skip_provider_registration = true
   features {}
@@ -76,3 +100,4 @@ resource "azurerm_log_analytics_workspace" "azure_app2_logs" {
   resource_group_name = "example-rg"
   sku                 = "PerGB2018"
 }
+
