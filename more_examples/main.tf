@@ -64,8 +64,15 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_log_analytics_workspace" "azure_logs" {
-  name                = "example-logs"
+resource "azurerm_log_analytics_workspace" "azure_app1_logs" {
+  name                = "example-logs-1"
+  location            = "East US" 
+  resource_group_name = "example-rg"
+  sku                 = "PerGB2018"
+}
+
+resource "azurerm_log_analytics_workspace" "azure_app2_logs" {
+  name                = "example-logs-2"
   location            = "East US" 
   resource_group_name = "example-rg"
   sku                 = "PerGB2018"
