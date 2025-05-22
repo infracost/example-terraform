@@ -6,7 +6,7 @@ on:
 jobs:
   auto_close_pr:
     runs-on: ubuntu-latest
-    if: github.repository == 'infracost/example-terraform' && github.event.pull_request.user.login != 'infracost-autofix[bot]'
+    if: github.repository == 'infracost/example-terraform' && (github.event.pull_request.user.login != 'infracost-autofix[bot]' || github.event.pull_request.user.login != 'alikhajeh1')
     steps:
     - uses: imba-tjd/auto-close-pr-action@master
       with:
