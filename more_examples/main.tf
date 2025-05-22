@@ -66,6 +66,10 @@ resource "aws_ecs_task_definition" "my_task" {
   memory                   = "2048" # 2 GB
   execution_role_arn       = "aws_iam_role.ecs_task_execution_role.arn"
 
+  runtime_platform {
+    cpu_architecture = "ARM64"
+  }
+
   container_definitions = jsonencode([
     {
       name      = "task-container"
