@@ -14,6 +14,53 @@ resource "aws_s3_bucket" "screenshots_dev" {
   bucket = "my_screenshots_bucket_dev"
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "screenshots_dev_lifecycle" {
+  bucket = aws_s3_bucket.screenshots_dev.id
+
+  rule {
+    id     = "default"
+    status = "Enabled"
+
+    expiration {
+      days = 90
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "screenshots_dev_lifecycle" {
+  bucket = aws_s3_bucket.screenshots_dev.id
+
+  rule {
+    id     = "default"
+    status = "Enabled"
+
+    expiration {
+      days = 90
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "screenshots_dev_lifecycle" {
+  bucket = aws_s3_bucket.screenshots_dev.id
+
+  rule {
+    id     = "default"
+    status = "Enabled"
+
+    expiration {
+      days = 90
+    }
+  }
+}
+
 resource "aws_s3_bucket" "screenshots_stage" {
   bucket = "my_screenshots_bucket_stage"
 }
