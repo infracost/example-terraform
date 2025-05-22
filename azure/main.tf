@@ -62,3 +62,34 @@ resource "azurerm_linux_function_app" "my_function" {
     Environment = "Prod"
   }
 }
+
+resource "azurerm_linux_virtual_machine" "new_app_vm" {
+  location            = "eastus"
+  name                = "test"
+  resource_group_name = "test"
+  admin_username      = "testuser"
+  admin_password      = "Testpa5s"
+
+  size = "Standard_D8as_v4"
+
+  tags = {
+    Environment = "production"
+    Service     = "web-app"
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  network_interface_ids = [
+    "/subscriptions/123/resourceGroups/testrg/providers/Microsoft.Network/networkInterfaces/testnic",
+  ]
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+}

@@ -34,3 +34,51 @@ resource "aws_lambda_function" "my_hello_world" {
   }
 }
 
+resource "aws_instance" "new_web_app" {
+  ami = "ami-005e54dee72cc1d00"
+
+  instance_type = "m3.2xlarge"
+
+  tags = {
+    Environment = "prod"
+    Service     = "web-app"
+  }
+
+  volume_tags = {
+    Environment = "production"
+  }
+
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
+
+  ebs_block_device {
+    volume_type = "gp3"
+    iops        = "20000"
+  }
+}
+
+resource "aws_db_instance" "mydb" {
+  allocated_storage       = 20
+  storage_type            = "gp3"
+  engine                  = "postgres"
+  engine_version          = "11.13"
+  instance_class          = "db.t4g.medium"
+  name                    = "mydb"
+  username                = "admin"
+  password                = "mypassword"
+  parameter_group_name    = "default.postgres11"
+  multi_az                = false
+  backup_retention_period = 7
+  skip_final_snapshot     = true
+  publicly_accessible     = false
+
+  tags = {
+    Environment = "production"
+    Service     = "web-app"
+  }
+}
+
+
+
