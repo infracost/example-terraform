@@ -92,6 +92,7 @@ resource "azurerm_log_analytics_workspace" "azure_app1_logs" {
   location            = "East US"
   resource_group_name = "example-rg"
   sku                 = "PerGB2018"
+  retention_in_days   = 30
 }
 
 resource "azurerm_log_analytics_workspace" "azure_app2_logs" {
