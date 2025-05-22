@@ -27,14 +27,14 @@ resource "aws_s3_bucket" "screenshots_prod" {
 }
 
 resource "aws_db_instance" "my_db" {
-  identifier         = "mysql57-extended"
-  engine             = "mysql"
-  engine_version     = "5.7.44"
-  instance_class     = "c5.2xlarge"
-  allocated_storage  = 20
-  username           = "admin"
-  password           = "yourpassword"
-  db_name            = "exampledb"
+  identifier          = "mysql57-extended"
+  engine              = "mysql"
+  engine_version      = "5.7.44"
+  instance_class      = "c5.2xlarge"
+  allocated_storage   = 20
+  username            = "admin"
+  password            = "yourpassword"
+  db_name             = "exampledb"
   publicly_accessible = false
   skip_final_snapshot = true
   deletion_protection = false
@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "my_task" {
   family                   = "my-task"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = "1024"  # 1 vCPU
+  cpu                      = "1024" # 1 vCPU
   memory                   = "2048" # 2 GB
   execution_role_arn       = "aws_iam_role.ecs_task_execution_role.arn"
 
@@ -89,14 +89,14 @@ provider "azurerm" {
 
 resource "azurerm_log_analytics_workspace" "azure_app1_logs" {
   name                = "example-logs-1"
-  location            = "East US" 
+  location            = "East US"
   resource_group_name = "example-rg"
   sku                 = "PerGB2018"
 }
 
 resource "azurerm_log_analytics_workspace" "azure_app2_logs" {
   name                = "example-logs-2"
-  location            = "East US" 
+  location            = "East US"
   resource_group_name = "example-rg"
   sku                 = "PerGB2018"
 }
