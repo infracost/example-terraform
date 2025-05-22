@@ -14,6 +14,7 @@ resource "aws_instance" "my_web_app" {
   tags = {
     Environment = "production"
     Service     = "web-app"
+    Name        = "dash"
   }
 
   root_block_device {
