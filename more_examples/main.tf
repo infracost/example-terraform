@@ -38,6 +38,10 @@ resource "aws_db_instance" "my_db" {
   publicly_accessible = false
   skip_final_snapshot = true
   deletion_protection = false
+
+  tags = {
+    Name = "my-db"
+  }
 }
 
 module "eks" {
