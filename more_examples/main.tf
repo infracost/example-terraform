@@ -30,7 +30,7 @@ resource "aws_db_instance" "my_db" {
   identifier          = "mysql57-extended"
   engine              = "mysql"
   engine_version      = "5.7.44"
-  instance_class      = "c5.2xlarge"
+  instance_class      = "c5.xlarge"
   allocated_storage   = 20
   username            = "admin"
   password            = "yourpassword"
