@@ -14,6 +14,24 @@ resource "aws_s3_bucket" "screenshots_dev" {
   bucket = "my_screenshots_bucket_dev"
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "screenshots_dev_lifecycle" {
+  bucket = aws_s3_bucket.screenshots_dev.id
+
+  rule {
+    id     = "intelligent-tiering"
+    status = "Enabled"
+
+    filter {
+      object_size_greater_than = 131072 # 128KB in bytes
+    }
+
+    transition {
+      storage_class = "INTELLIGENT_TIERING"
+      days          = 0
+    }
+  }
+}
+
 resource "aws_s3_bucket" "screenshots_stage" {
   bucket = "my_screenshots_bucket_stage"
 }
