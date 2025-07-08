@@ -3,17 +3,6 @@ provider "google" {
   project = "test"
 }
 
-resource "google_compute_disk" "my_disk" {
-  name = "my-persistent-disk"
-  type = "pd-standard"
-  zone = "us-central1-a"
-  size = 100
-  labels = {
-    environment = "production"
-    service     = "web-app"
-  }
-}
-
 resource "google_compute_instance" "my_instance" {
   zone = "us-central1-a"
   name = "test"
@@ -59,7 +48,7 @@ resource "google_compute_instance" "my_instance_2" {
   zone = "us-central1-a"
   name = "test"
 
-  machine_type = "n1-standard-16"
+  machine_type = "n1-standard-2"
   network_interface {
     network = "default"
     access_config {}

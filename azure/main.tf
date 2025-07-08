@@ -70,7 +70,7 @@ resource "azurerm_linux_virtual_machine" "new_app_vm" {
   admin_username      = "testuser"
   admin_password      = "Testpa5s"
 
-  size = "Standard_D8as_v4"
+  size = "Standard_D2as_v4"
 
   tags = {
     Environment = "prod"
