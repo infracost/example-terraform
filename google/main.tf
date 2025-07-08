@@ -3,6 +3,17 @@ provider "google" {
   project = "test"
 }
 
+resource "google_compute_disk" "my_disk" {
+  name = "my-persistent-disk"
+  type = "pd-standard"
+  zone = "us-central1-a"
+  size = 100
+  labels = {
+    environment = "production"
+    service     = "web-app"
+  }
+}
+
 resource "google_compute_instance" "my_instance" {
   zone = "us-central1-a"
   name = "test"
@@ -41,5 +52,26 @@ resource "google_cloudfunctions_function" "my_function" {
 
   labels = {
     environment = "Prod"
+  }
+}
+
+resource "google_compute_instance" "my_instance_2" {
+  zone = "us-central1-a"
+  name = "test"
+
+  machine_type = "n1-standard-16"
+  network_interface {
+    network = "default"
+    access_config {}
+  }
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  labels = {
+    environment = "production"
   }
 }
