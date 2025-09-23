@@ -80,5 +80,7 @@ resource "aws_db_instance" "mydb" {
   }
 }
 
-
+resource "aws_sqs_queue" "mysqs" {
+  name = "main-queue"
+}
 
