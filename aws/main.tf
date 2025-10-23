@@ -35,19 +35,14 @@ resource "aws_lambda_function" "my_hello_world" {
   }
 }
 
-resource "aws_rds_instance" "my_database" {
-  allocated_storage    = 100
+resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  db_name              = "mydb"
   engine               = "mysql"
   engine_version       = "8.0"
-  instance_class       = "db.m5.large" # <<<<<<<<<< Try changing this to db.m5.xlarge to compare the costs
-  name                 = "mydb"
+  instance_class       = "db.t3.micro"
   username             = "foo"
-  password             = "barbazqux"
+  password             = "foobarbaz"
   parameter_group_name = "default.mysql8.0"
   skip_final_snapshot  = true
-
-  tags = {
-    Environment = "production"
-    Service     = "web-app"
-  }
 }
