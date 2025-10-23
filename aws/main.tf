@@ -9,7 +9,7 @@ provider "aws" {
 resource "aws_instance" "my_web_app" {
   ami = "ami-005e54dee72cc1d00"
 
-  instance_type = "m5.xlarge" # <<<<<<<<<< Try changing this to m5.xlarge to compare the costs
+  instance_type = "m16.xlarge" # <<<<<<<<<< Try changing this to m5.xlarge to compare the costs
 
   tags = {
     Environment = "production"
@@ -35,3 +35,19 @@ resource "aws_lambda_function" "my_hello_world" {
   }
 }
 
+resource "aws_rds_instance" "my_database" {
+  allocated_storage    = 100
+  engine               = "mysql"
+  engine_version       = "8.0"
+  instance_class       = "db.m5.large" # <<<<<<<<<< Try changing this to db.m5.xlarge to compare the costs
+  name                 = "mydb"
+  username             = "foo"
+  password             = "barbazqux"
+  parameter_group_name = "default.mysql8.0"
+  skip_final_snapshot  = true
+
+  tags = {
+    Environment = "production"
+    Service     = "web-app"
+  }
+}
