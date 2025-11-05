@@ -3,6 +3,7 @@ provider "google" {
   project = "test"
 }
 
+
 resource "google_compute_instance" "my_instance" {
   zone = "us-central1-a"
   name = "test"
