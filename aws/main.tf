@@ -22,6 +22,22 @@ resource "aws_instance" "my_web_app" {
   }
 }
 
+resource "aws_instance" "gpu_instance" {
+  ami = "ami-005e54dee72cc1d00"
+  instance_type = "g6e.8xlarge"
+
+tags = {
+  Environment = "production"
+  Service     = "web-app"
+  Name        = "gpu-instance"
+}
+
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+  root_block_device {
+    volume_size = 1000
+  }
+}
+
 resource "aws_lambda_function" "my_hello_world" {
   runtime       = "nodejs12.x"
   handler       = "exports.test"
