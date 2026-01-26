@@ -18,7 +18,8 @@ resource "aws_instance" "my_web_app" {
   }
 
   root_block_device {
-    volume_size = 1000 # <<<<<<<<<< Try adding volume_type="gp3" to compare costs
+    volume_size = 1000 # <<<<<<<<<< Try adding volume_type = "gp3" to compare costs
+    volume_type = "gp3"
   }
 }
 
