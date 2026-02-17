@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Converted from Terraform configuration'
+
+Resources:
+  MyWebApp:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-005e54dee72cc1d00
+      InstanceType: m3.xlarge
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 1000
+            DeleteOnTermination: true
+      Tags:
+        - Key: Environment
+          Value: production
+        - Key: Service
+          Value: web-app
+
+  MyHelloWorld:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: test
+      Role: arn:aws:iam::123123123123:role/lambda-execution-role
+      MemorySize: 512
+      ImageUri: test
+      PackageType: Image
+      Tags:
+        - Key: Environment
+          Value: Prod
+
+  NewWebApp:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-005e54dee72cc1d00
+      InstanceType: m3.2xlarge
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 100
+            VolumeType: gp3
+            DeleteOnTermination: true
+        - DeviceName: /dev/sdb
+          Ebs:
+            VolumeSize: 100
+            VolumeType: gp3
+            Iops: 20000
+      Tags:
+        - Key: Environment
+          Value: prod
+        - Key: Service
+          Value: web-app
+
+  NewWebAppRootVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      Size: 100
+      VolumeType: gp3
+      AvailabilityZone: us-east-1a
+      Tags:
+        - Key: Environment
+          Value: production
+
+  NewWebAppVolumeAttachment:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      Device: /dev/sdc
+      InstanceId: !Ref NewWebApp
+      VolumeId: !Ref NewWebAppRootVolume
+
+  MyDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: mydb
+      AllocatedStorage: 20
+      StorageType: gp3
+      Engine: postgres
+      EngineVersion: '11.13'
+      DBInstanceClass: db.t4g.medium
+      DBName: mydb
+      MasterUsername: admin
+      MasterUserPassword: mypassword
+      DBParameterGroupName: default.postgres11
+      MultiAZ: false
+      BackupRetentionPeriod: 7
+      PubliclyAccessible: false
+      Tags:
+        - Key: Environment
+          Value: production
+        - Key: Service
+          Value: web-app
+    DeletionPolicy: Delete
