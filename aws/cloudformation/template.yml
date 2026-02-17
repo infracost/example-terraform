@@ -56,7 +56,7 @@ Resources:
     Type: AWS::EC2::Volume
     Properties:
       Size: 100
-      VolumeType: gp3
+      VolumeType: gp2
       AvailabilityZone: us-east-1a
       Tags:
         - Key: Environment
