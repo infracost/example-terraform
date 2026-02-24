@@ -12,8 +12,9 @@ resource "aws_instance" "my_web_app" {
   instance_type = "m3.xlarge" # <<<<<<<<<< Try changing this to m5.xlarge to compare the costs
 
   tags = {
-    Environment = "production"
+    Environment = "Production"
     Service     = "web-app"
+    Name        = "dash"
   }
 
   root_block_device {
@@ -30,7 +31,7 @@ resource "aws_lambda_function" "my_hello_world" {
 
   memory_size = 512
   tags = {
-    Environment = "Prod"
+    Environment = "Production"
   }
 }
 
@@ -40,12 +41,13 @@ resource "aws_instance" "new_web_app" {
   instance_type = "m3.2xlarge"
 
   tags = {
-    Environment = "prod"
+    Environment = "Production"
     Service     = "web-app"
   }
 
   volume_tags = {
-    Environment = "production"
+    Environment = "Production"
+    Service     = "web-app"
   }
 
   root_block_device {
@@ -75,10 +77,7 @@ resource "aws_db_instance" "mydb" {
   publicly_accessible     = false
 
   tags = {
-    Environment = "production"
+    Environment = "prod"
     Service     = "web-app"
   }
 }
-
-
-
