@@ -14,6 +14,19 @@ resource "aws_s3_bucket" "screenshots_dev" {
   bucket = "my_screenshots_bucket_dev"
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "screenshots_dev" {
+  bucket = aws_s3_bucket.screenshots_dev.id
+
+  rule {
+    id     = "abort-incomplete-multipart-upload"
+    status = "Enabled"
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
+
 resource "aws_s3_bucket" "screenshots_stage" {
   bucket = "my_screenshots_bucket_stage"
 }
