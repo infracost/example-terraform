@@ -7,7 +7,8 @@ provider "aws" {
 }
 
 resource "aws_cloudwatch_log_group" "app_logs" {
-  name = "my_app_logs"
+  name              = "my_app_logs"
+  retention_in_days = 30
 }
 
 resource "aws_s3_bucket" "screenshots_dev" {
