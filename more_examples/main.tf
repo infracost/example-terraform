@@ -22,6 +22,21 @@ resource "aws_s3_bucket" "screenshots_qa" {
   bucket = "my_screenshots_bucket_qa"
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "screenshots_qa_lifecycle" {
+  bucket = aws_s3_bucket.screenshots_qa.id
+  rule {
+    id     = "intelligent_tiering_rule"
+    status = "Enabled"
+    transition {
+      days          = 30
+      storage_class = "INTELLIGENT_TIERING"
+    }
+    filter {
+      object_size_greater_than = 131072 # 128KB in bytes
+    }
+  }
+}
+
 resource "aws_s3_bucket" "screenshots_prod" {
   bucket = "my_screenshots_bucket_prod"
 }
