@@ -28,7 +28,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "screenshots_qa_lifecycle" {
     id     = "intelligent_tiering_rule"
     status = "Enabled"
     transition {
-      days          = 30
+      days          = 10
       storage_class = "INTELLIGENT_TIERING"
     }
     filter {
