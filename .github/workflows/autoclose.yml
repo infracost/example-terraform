@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'infracost/example-terraform' && github.event.pull_request.user.login != 'infracost-autofix[bot]'
     steps:
-      - uses: imba-tjd/auto-close-pr-action@master
+      - uses: imba-tjd/auto-close-pr-action@aa22b17e0e891e7e62945b030cbb4b1d62ac936e # master
         with:
           pattern: "WILL_NOT_MATCH"
           message: "Instead of raising a PR against this repository, please fork the repo and raise a PR against your fork. Thank you."
