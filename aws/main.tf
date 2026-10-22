@@ -29,7 +29,7 @@ resource "aws_lambda_function" "my_hello_world" {
   function_name = "test"
   role          = "arn:aws:ec2:us-east-1:123123123123:instance/i-1231231231"
 
-  memory_size = 512
+  memory_size = 768
   tags = {
     Environment = "Prod"
   }

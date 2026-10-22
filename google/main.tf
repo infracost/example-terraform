@@ -3,43 +3,66 @@ provider "google" {
   project = "test"
 }
 
-resource "google_compute_instance" "my_instance" {
-  zone = "us-central1-a"
-  name = "test"
+resource "google_compute_instance" "cud_demo" {
+  name         = "cud-demo"
+  zone         = "us-central1-a"
+  machine_type = "n1-standard-32"
 
-  machine_type = "n1-standard-16" # <<<<<<<<<< Try changing this to n1-standard-32 to compare the costs
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-12"
+      size  = 289
+      type  = "pd-ssd"
+    }
+  }
+
   network_interface {
     network = "default"
     access_config {}
   }
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
+  labels = {
+    environment = "production"
+    service     = "cud-demo"
+  }
+}
+
+resource "google_sql_database_instance" "cud_demo" {
+  name             = "cud-demo-sql"
+  database_version = "POSTGRES_15"
+  region           = "us-central1"
+
+  settings {
+    tier      = "db-custom-4-15360"
+    disk_type = "PD_SSD"
+    disk_size = 200
+
+    backup_configuration {
+      enabled                        = true
+      start_time                     = "03:00"
+      point_in_time_recovery_enabled = true
+    }
+
+    ip_configuration {
+      ipv4_enabled = true
     }
   }
 
-  scheduling {
-    preemptible = true
-  }
+  deletion_protection = false
+}
 
-  guest_accelerator {
-    type  = "nvidia-tesla-t4" # <<<<<<<<<< Try changing this to nvidia-tesla-p4 to compare the costs
-    count = 4
+resource "google_storage_bucket" "cud_demo_logs" {
+  name     = "cud-demo-logs"
+  location = "US"
+
+  storage_class = "STANDARD"
+
+  versioning {
+    enabled = true
   }
 
   labels = {
     environment = "production"
-    service     = "web-app"
-  }
-}
-
-resource "google_cloudfunctions_function" "my_function" {
-  runtime             = "nodejs20"
-  name                = "test"
-  available_memory_mb = 512
-
-  labels = {
-    environment = "Prod"
+    service     = "cud-demo"
   }
 }
