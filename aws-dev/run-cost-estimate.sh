@@ -6,6 +6,8 @@ TFC_HOST="${TFC_HOST:-app.terraform.io}"
 TFC_ORGANIZATION="${TFC_ORGANIZATION:-travis-dev}"
 TFC_WORKSPACE="${TFC_WORKSPACE:-example-terraform-api}"
 TFC_TOKEN="${TFC_TOKEN:-}"
+TFC_RUN_MESSAGE="${TFC_RUN_MESSAGE:-API-driven cost-estimate experiment}"
+TFC_CREATE_WORKSPACE="${TFC_CREATE_WORKSPACE:-false}"
 TFC_RUN_ACTION="${TFC_RUN_ACTION:-}"
 TFC_RUN_ACTION_ID="${TFC_RUN_ACTION_ID:-}"
 POLL_INTERVAL_SECONDS="${POLL_INTERVAL_SECONDS:-2}"
@@ -72,6 +74,11 @@ fi
 
 workspace_path="/organizations/${TFC_ORGANIZATION}/workspaces/${TFC_WORKSPACE}"
 if ! api_request GET "$workspace_path"; then
+  if [[ "$TFC_CREATE_WORKSPACE" != "true" ]]; then
+    echo "Workspace $TFC_ORGANIZATION/$TFC_WORKSPACE was not found or is not accessible." >&2
+    echo "Set TFC_CREATE_WORKSPACE=true only when bootstrapping a new workspace." >&2
+    exit 1
+  fi
   jq -n --arg name "$TFC_WORKSPACE" '{
     data: {
       type: "workspaces",
@@ -88,7 +95,10 @@ fi
 workspace_id="$(jq -r '.data.id' "$response_body")"
 echo "Using workspace: $TFC_WORKSPACE ($workspace_id)"
 
-jq -n '{data: {type: "configuration-versions"}}' >"$request_body"
+jq -n '{data: {
+  type: "configuration-versions",
+  attributes: {"auto-queue-runs": false}
+}}' >"$request_body"
 api_request POST "/workspaces/${workspace_id}/configuration-versions" "$request_body"
 configuration_version_id="$(jq -r '.data.id' "$response_body")"
 upload_url="$(jq -r '.data.attributes["upload-url"]' "$response_body")"
@@ -105,22 +115,24 @@ curl --fail --silent --show-error --request PUT \
   --upload-file "$archive" \
   "$upload_url"
 
-# Uploading a configuration version automatically creates the run. Creating a
-# second run here would leave it pending behind the automatically created run.
-run_id=""
-for ((poll = 1; poll <= MAX_POLLS; poll++)); do
-  api_request GET "$workspace_path"
-  run_id="$(jq -r '.data.relationships["current-run"].data.id // empty' "$response_body")"
-  if [[ -n "$run_id" ]]; then
-    break
-  fi
-  sleep "$POLL_INTERVAL_SECONDS"
-done
-
-if [[ -z "$run_id" ]]; then
-  echo "Timed out waiting for Terraform Cloud to create a run." >&2
-  exit 1
-fi
+jq -n \
+  --arg workspace_id "$workspace_id" \
+  --arg configuration_version_id "$configuration_version_id" \
+  --arg message "$TFC_RUN_MESSAGE" \
+  '{
+    data: {
+      type: "runs",
+      attributes: {message: $message, "auto-apply": false},
+      relationships: {
+        workspace: {data: {type: "workspaces", id: $workspace_id}},
+        "configuration-version": {
+          data: {type: "configuration-versions", id: $configuration_version_id}
+        }
+      }
+    }
+  }' >"$request_body"
+api_request POST "/runs" "$request_body"
+run_id="$(jq -r '.data.id' "$response_body")"
 echo "Created run: $run_id"
 
 for ((poll = 1; poll <= MAX_POLLS; poll++)); do

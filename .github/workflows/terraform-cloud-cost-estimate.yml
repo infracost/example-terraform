@@ -1,0 +1,45 @@
+name: Terraform Cloud Cost Estimate
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - "aws-dev/**"
+      - ".github/workflows/terraform-cloud-cost-estimate.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  # One workspace processes runs serially. Do not cancel an in-progress job:
+  # cancellation would leave its Terraform Cloud run running without a watcher.
+  group: terraform-cloud-cost-estimate
+  cancel-in-progress: false
+
+jobs:
+  cost-estimate:
+    # Only the repository owner can receive the Terraform Cloud token or
+    # execute their PR code. Forks and collaborator PRs are skipped.
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TFC_TOKEN: ${{ secrets.TFC_API_TOKEN }}
+      TFC_ORGANIZATION: travis-dev
+      TFC_WORKSPACE: example-terraform-api
+      TFC_RUN_MESSAGE: >-
+        Triggered from Terraform Cloud CI by PR author
+        (${{ github.event.pull_request.user.login }}) for SHA
+        (${{ github.event.pull_request.head.sha }})
+    steps:
+      - name: Check out the PR commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Create Terraform Cloud cost estimate
+        shell: bash
+        run: bash aws-dev/run-cost-estimate.sh
